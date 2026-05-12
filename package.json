@@ -17,7 +17,7 @@
         "src"
     ],
     "scripts": {
-        "postinstall": "node --eval \"process.env.ACT || require('child_process').execSync('dotnet husky install', {stdio: 'inherit'})\"",
+        "prepare": "node --eval \"process.env.ACT || require('child_process').execSync('dotnet husky install', {stdio: 'inherit'})\"",
         "test": "vitest run",
         "test:watch": "vitest"
     },
