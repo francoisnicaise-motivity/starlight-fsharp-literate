@@ -1,6 +1,6 @@
 {
     "name": "starlight-fsharp-literate",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "F# Literate (.fsx) file support for Astro Starlight",
     "type": "module",
     "packageManager": "pnpm@10.33.2",
@@ -17,7 +17,7 @@
         "src"
     ],
     "scripts": {
-        "prepare": "node --eval \"process.env.ACT || require('child_process').execSync('dotnet husky install', {stdio: 'inherit'})\"",
+        "prepare": "node --eval \"if (process.env.CI || process.env.ACT) { console.log('Skipping husky install in CI/ACT environment'); process.exit(0); } require('child_process').execSync('dotnet husky install', {stdio: 'inherit'})\"",
         "test": "vitest run",
         "test:watch": "vitest"
     },
