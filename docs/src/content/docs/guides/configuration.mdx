@@ -59,9 +59,9 @@ The object contains the following properties:
 
 ### `mirror`
 
-**Type:** `{ mode: "mirror", sourceDir?: string, outputDir?: string, sourceExtensions?: string[] }`
+**Type:** `{ mode: "mirror", sourceDir?: string, outputDir?: string, sourceExtensions?: string[], forceLowerCaseOutputFileName?: boolean }`
 
-**Default:** `{ mode: "mirror", sourceDir: "src/content/fsharp-literate", outputDir: "src/content/docs" }`
+**Default:** `{ mode: "mirror", sourceDir: "src/content/fsharp-literate", outputDir: "src/content/docs", forceLowerCaseOutputFileName: false}`
 
 Source files live in a dedicated directory that mirrors the output directory structure.
 
@@ -82,7 +82,8 @@ fsharpLiterate({
     mode: "mirror",
     sourceDir: "src/content/fsharp-literate",
     outputDir: "src/content/docs",
-    sourceExtensions: [".fsx", ".fs"]
+    sourceExtensions: [".fsx", ".fs"],
+    forceLowerCaseOutputFileName: false
 })
 ```
 
@@ -100,6 +101,10 @@ The object contains the following properties:
 - `sourceExtensions`: `string[]` (optional) — file extensions used to identify source files
 
     Default is `[".fsx", ".fs"]`
+
+- `forceLowerCaseOutputFileName`: `boolean` (optional) — output the generated `.mdx` file with a lowercased filename, regardless of the source file's casing. Useful because Astro/Starlight derives page URLs from filenames, and uppercase letters can cause routing issues — so F# developers don't need to rename `JsConfig.fsx` to `jsconfig.fsx`
+
+    Default is `false`
 
 ## VSCode Settings
 

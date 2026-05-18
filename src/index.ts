@@ -17,6 +17,8 @@ type MirrorOptions = {
     outputDir?: string;
     /** Extensions for source files. Defaults to [".fsx", ".fs"]. */
     sourceExtensions?: string[];
+    /** Force output file name to lowercase */
+    forceLowerCaseOutputFileName?: boolean;
 };
 
 export type Options = InlineOptions | MirrorOptions;
@@ -26,6 +28,7 @@ interface ResolvedConfig {
     sourceDir: string;
     outputDir: string;
     sourceExtensions: string[];
+    forceLowerCaseOutputFileName: boolean;
 }
 
 /** Normalises user-facing options into a consistent internal shape used throughout the plugin. */
@@ -36,6 +39,7 @@ function resolveConfig(options?: Options): ResolvedConfig {
             sourceDir: path.resolve(options.sourceDir ?? "src/content/fsharp-literate"),
             outputDir: path.resolve(options.outputDir ?? "src/content/docs"),
             sourceExtensions: options.sourceExtensions ?? [".fsx", ".fs"],
+            forceLowerCaseOutputFileName: options.forceLowerCaseOutputFileName ?? false
         };
     }
 
@@ -45,6 +49,7 @@ function resolveConfig(options?: Options): ResolvedConfig {
         sourceDir: base,
         outputDir: base,
         sourceExtensions: [".source.fsx", ".source.fs"],
+        forceLowerCaseOutputFileName: false,
     };
 }
 
@@ -96,7 +101,7 @@ async function generateFile(absPath: string, config: ResolvedConfig, logger: Ast
         return null;
     }
 
-    const sourceFileName = path.basename(absPath);
+    const sourceFileName = config.forceLowerCaseOutputFileName ? path.basename(absPath).toLowerCase() : path.basename(absPath);
     const content = [
         parsed.frontMatter,
         "",
